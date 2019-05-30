@@ -25,49 +25,58 @@
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 
-#import datetime as dt
 import sqlite3
 import json
 import logging
 
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 log = logging.getLogger(__name__)
 
 class DataBase:
     def __init__(self, scheme, basefile='data.sqlite'):
-        
         self.scheme = ''
+        self.basefile = basefile
         try:
-            self.conn = sqlite3.connect(basefile, check_same_thread=False)
+            conn = self.connect(basefile=basefile)
         except:
             log.debug('Could not connect to DataBase.')
             return None
         with open(scheme, 'r') as scheme_sql:
             sql = scheme_sql.read()
             self.scheme = sql
-            if self.conn is not None:
+            if conn is not None:
                 try:
-                    cursor = self.conn.cursor()
+                    cursor = conn.cursor()
                     cursor.executescript(sql)
                 except:
                     log.debug('Could not create scheme.')
             else:
                 log.debug("Error! cannot create the database connection.")
-        mods = None
-        with open('mods.json') as f:
-            mods = json.load(f)
-        for mod in mods:
-            try:
-                isinstance(mod['time'], str)
-            except:
-                mod['time'] = '1522011600'
-             
-        log.debug('DB created.')
+        log.info('DB created.')
+        self.close(conn)
+
+    def connect(self, basefile):
+        log.debug("Open connection to %s" % basefile)
+        return sqlite3.connect(basefile, check_same_thread=False)
 
     def execute(self, sql):
-        cursor = self.conn.cursor()
+        conn = self.connect(basefile=self.basefile)
+        log.debug("Executing: %s" % sql)
+        cursor = conn.cursor()
         cursor.execute(sql)
-        self.conn.commit()
-        return cursor.fetchall()
+        conn.commit()
+        result = cursor.fetchall()
+        self.close(conn)
+        return result
 
-    def close(self):
-        self.conn.close()
+    def user(self, action, name, pass_hash):
+        if action == 'create':
+            sql = '''INSERT INTO users('name', 'pass')
+            VALUES ('%s', '%s')''' % (name, pass_hash)
+            self.execute(sql)
+
+    def close(self, conn):
+        log.debug("Close connection to %s" % self.basefile)
+        conn.close()
