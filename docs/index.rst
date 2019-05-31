@@ -3,7 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to hexound_api's documentation!
+Hexound API documentation
 =======================================
 
 .. toctree::
@@ -12,9 +12,24 @@ Welcome to hexound_api's documentation!
     intro
 
 
-Indices and tables
+Table of content
 ==================
 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+Hexound API main
+===================
+.. automodule:: hexound_api
+   :members:
+
+Hexound API user
+=================
+.. automodule:: api.user_api
+   :members:
+
+Hexound API database
+===================
+.. automodule:: api.database
+   :members:

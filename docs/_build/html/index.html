@@ -4,8 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta charset="utf-8" />
-    <title>Welcome to hexound_api’s documentation! &#8212; hexound_api  documentation</title>
-    <link rel="stylesheet" href="_static/alabaster.css" type="text/css" />
+    <title>Hexound API documentation &#8212; hexound_api  documentation</title>
+    <link rel="stylesheet" href="_static/nature.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
     <script type="text/javascript" src="_static/jquery.js"></script>
@@ -13,62 +13,200 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/language_data.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-   
-  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
-  
-  
-  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
-
+    <link rel="search" title="Search" href="search.html" /> 
   </head><body>
-  
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">hexound_api  documentation</a> &#187;</li> 
+      </ul>
+    </div>  
 
     <div class="document">
       <div class="documentwrapper">
         <div class="bodywrapper">
-          
-
           <div class="body" role="main">
             
-  <div class="section" id="welcome-to-hexound-api-s-documentation">
-<h1>Welcome to hexound_api’s documentation!<a class="headerlink" href="#welcome-to-hexound-api-s-documentation" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="hexound-api-documentation">
+<h1>Hexound API documentation<a class="headerlink" href="#hexound-api-documentation" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
 </div>
 </div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="table-of-content">
+<h1>Table of content<a class="headerlink" href="#table-of-content" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
 <li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
 <li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
 </ul>
 </div>
+<div class="section" id="module-hexound_api">
+<span id="hexound-api-main"></span><h1>Hexound API main<a class="headerlink" href="#module-hexound_api" title="Permalink to this headline">¶</a></h1>
+<p>API for hexound v2
+.. moduleauthor:: AB &lt;github.com/house-of-vanity&gt;</p>
+<dl class="function">
+<dt id="hexound_api.usr_reg">
+<code class="descclassname">hexound_api.</code><code class="descname">usr_reg</code><span class="sig-paren">(</span><em>action</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/hexound_api.html#usr_reg"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#hexound_api.usr_reg" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Perform action with users</strong>
+- Create user with hashed password.
+- …</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>action</strong> (<em>string</em>) – Requested action</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>json</p>
+</dd>
+</dl>
+<ul>
+<li><p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ curl --data &quot;name=khui&amp;pass=pizda&quot; http://localhost:5000/usr/create
+</pre></div>
+</div>
+</li>
+<li><p>Expected Success Response:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;Fri May 31 21:05:30 2019&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;exception&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+  <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;User khui created.&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;traceback&quot;</span><span class="p">:</span> <span class="n">null</span><span class="p">,</span>
+  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Info&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>Fail Response - user exists:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;Fri May 31 21:08:42 2019&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;exception&quot;</span><span class="p">:</span> <span class="s2">&quot;IntegrityError&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Username isn&#39;t available.&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;traceback&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;  File &quot;</span><span class="n">hexound_api</span><span class="o">.</span><span class="n">py</span><span class="s2">&quot;, line 69, in usr_reg    db.user(action=action, name=name, pass_hash=pass_hash)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;  File &quot;</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">repos</span><span class="o">/</span><span class="n">hexound_api</span><span class="o">/</span><span class="n">database</span><span class="o">.</span><span class="n">py</span><span class="s2">&quot;, line 78, in user    self.execute(sql)&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;  File &quot;</span><span class="o">/</span><span class="n">root</span><span class="o">/</span><span class="n">repos</span><span class="o">/</span><span class="n">hexound_api</span><span class="o">/</span><span class="n">database</span><span class="o">.</span><span class="n">py</span><span class="s2">&quot;, line 68, in execute    cursor.execute(sql)&quot;</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Error&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+<li><p>Fail Response - protocol violation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+  <span class="s2">&quot;date&quot;</span><span class="p">:</span> <span class="s2">&quot;Fri May 31 21:22:04 2019&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;exception&quot;</span><span class="p">:</span> <span class="s2">&quot;BadRequestKeyError&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Lack of parameters.&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;traceback&quot;</span><span class="p">:</span> <span class="p">[</span>
+    <span class="s2">&quot;  File &quot;</span><span class="n">hexound_api</span><span class="o">.</span><span class="n">py</span><span class="s2">&quot;, line 67, in usr_reg    pass_ = data[&#39;pass&#39;]&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;  File &quot;</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">python3</span><span class="o">.</span><span class="mi">6</span><span class="o">/</span><span class="n">dist</span><span class="o">-</span><span class="n">packages</span><span class="o">/</span><span class="n">werkzeug</span><span class="o">/</span><span class="n">datastructures</span><span class="o">.</span><span class="n">py</span><span class="s2">&quot;, line 442, in __getitem__    raise exceptions.BadRequestKeyError(key)&quot;</span>
+  <span class="p">],</span>
+  <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;Error&quot;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</dd></dl>
+
+</div>
+<div class="section" id="module-api.user_api">
+<span id="hexound-api-user"></span><h1>Hexound API user<a class="headerlink" href="#module-api.user_api" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="hexound-api-database">
+<h1>Hexound API database<a class="headerlink" href="#hexound-api-database" title="Permalink to this headline">¶</a></h1>
+<span class="target" id="module-api.database"></span><span class="target" id="module-models"></span><dl class="class">
+<dt id="api.database.DataBase">
+<em class="property">class </em><code class="descclassname">api.database.</code><code class="descname">DataBase</code><span class="sig-paren">(</span><em>scheme</em>, <em>basefile='data.sqlite'</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api/database.html#DataBase"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api.database.DataBase" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class create or use existent SQLite database file. It provides 
+high-level methods for database.</p>
+<dl class="method">
+<dt id="api.database.DataBase.close">
+<code class="descname">close</code><span class="sig-paren">(</span><em>conn</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api/database.html#DataBase.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api.database.DataBase.close" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close connection object instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>conn</strong> (<em>object</em>) – sqlite3 connection object</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="api.database.DataBase.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><em>basefile</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api/database.html#DataBase.connect"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api.database.DataBase.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create connect object for basefile</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>basefile</strong> (<em>string</em>) – SQLite database filename</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>sqlite3 connect object</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="api.database.DataBase.execute">
+<code class="descname">execute</code><span class="sig-paren">(</span><em>sql</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api/database.html#DataBase.execute"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api.database.DataBase.execute" title="Permalink to this definition">¶</a></dt>
+<dd><p>Execute SQL code. First of all connect to self.basefile. Close 
+connection after execution.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>sql</strong> (<em>string</em>) – SQL code</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>list of response. Empty list when no rows are available.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="api.database.DataBase.user">
+<code class="descname">user</code><span class="sig-paren">(</span><em>action</em>, <em>name</em>, <em>pass_hash</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/api/database.html#DataBase.user"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#api.database.DataBase.user" title="Permalink to this definition">¶</a></dt>
+<dd><p><strong>Perform action with users table</strong></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>action</strong> (<em>string</em>) – Requested action</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
 
 
           </div>
-          
         </div>
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
-<h1 class="logo"><a href="#">hexound_api</a></h1>
-
-
-
-
-
-
-
-
-<h3>Navigation</h3>
-
-<div class="relations">
-<h3>Related Topics</h3>
-<ul>
-  <li><a href="#">Documentation overview</a><ul>
-  </ul></li>
+  <h3><a href="#">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Hexound API documentation</a></li>
+<li><a class="reference internal" href="#table-of-content">Table of content</a></li>
+<li><a class="reference internal" href="#module-hexound_api">Hexound API main</a></li>
+<li><a class="reference internal" href="#module-api.user_api">Hexound API user</a></li>
+<li><a class="reference internal" href="#hexound-api-database">Hexound API database</a></li>
 </ul>
-</div>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
 <div id="searchbox" style="display: none" role="search">
   <h3>Quick search</h3>
     <div class="searchformwrapper">
@@ -79,32 +217,25 @@
     </div>
 </div>
 <script type="text/javascript">$('#searchbox').show(0);</script>
-
-
-
-
-
-
-
-
         </div>
       </div>
       <div class="clearer"></div>
     </div>
-    <div class="footer">
-      &copy;2019, AB.
-      
-      |
-      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.0.1</a>
-      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
-      
-      |
-      <a href="_sources/index.rst.txt"
-          rel="nofollow">Page source</a>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">hexound_api  documentation</a> &#187;</li> 
+      </ul>
     </div>
-
-    
-
-    
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, AB.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 2.0.1.
+    </div>
   </body>
 </html>
