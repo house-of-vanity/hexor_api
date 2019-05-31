@@ -23,25 +23,22 @@
 # ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+"""API for hexound v2
+.. moduleauthor:: AB <github.com/house-of-vanity>
+"""
 
-from flask import Response, render_template, request, Flask, send_file, jsonify
 import json
 import logging
+import os
+from flask import Response, render_template, request, Flask, send_file, jsonify
 from flask_cors import CORS
-from database import DataBase
-from tools.passwd import hash_password, verify_password
-from tools.response import wrap
+from api.database import DataBase
+from api.tools.passwd import hash_password, verify_password
+from api.tools.response import wrap
 from sqlite3 import IntegrityError
 
-app = Flask(__name__, static_folder='mods')
-db = DataBase(scheme='data.sql')
-
-CORS(app)
-
-logging.basicConfig(
-    level=logging.DEBUG,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
-log = logging.getLogger('fiend_sucker')
+HOME_DIR = os.path.dirname(os.path.realpath(__file__))
+app = Flask(__name__, static_folder=os.path.realpath("{}/mods".format(HOME_DIR)))
 
 @app.route("/mods")
 def mods():
@@ -59,6 +56,57 @@ def mods():
 
 @app.route("/usr/<action>", methods = ['POST', 'GET'])
 def usr_reg(action):
+    """
+          **Perform action with users**
+          - Create user with hashed password.
+          - ...
+
+          :param action: Requested action
+          :type action: string
+          :returns: json
+
+          - Example::
+
+              $ curl --data "name=khui&pass=pizda" http://localhost:5000/usr/create
+
+          - Expected Success Response::
+
+              {
+                "date": "Fri May 31 21:05:30 2019",
+                "exception": null,
+                "message": "User khui created.",
+                "traceback": null,
+                "type": "Info"
+              }
+
+          - Fail Response - user exists::
+
+              {
+                "date": "Fri May 31 21:08:42 2019",
+                "exception": "IntegrityError",
+                "message": "Username isn't available.",
+                "traceback": [
+                  "  File \"hexound_api.py\", line 69, in usr_reg    db.user(action=action, name=name, pass_hash=pass_hash)",
+                  "  File \"/root/repos/hexound_api/database.py\", line 78, in user    self.execute(sql)",
+                  "  File \"/root/repos/hexound_api/database.py\", line 68, in execute    cursor.execute(sql)"
+                ],
+                "type": "Error"
+              }
+
+          - Fail Response - protocol violation::
+
+              {
+                "date": "Fri May 31 21:22:04 2019",
+                "exception": "BadRequestKeyError",
+                "message": "Lack of parameters.",
+                "traceback": [
+                  "  File \"hexound_api.py\", line 67, in usr_reg    pass_ = data['pass']",
+                  "  File \"/usr/local/lib/python3.6/dist-packages/werkzeug/datastructures.py\", line 442, in __getitem__    raise exceptions.BadRequestKeyError(key)"
+                ],
+                "type": "Error"
+              }
+
+    """
     if request.method == 'POST':
         data = request.form
         if action == 'create':
@@ -76,4 +124,10 @@ def usr_reg(action):
         return jsonify(wrap(message="Only POST method is available."))
 
 if __name__ == "__main__":
+    db = DataBase(scheme=os.path.realpath("{}/data.sql".format(HOME_DIR)))
+    CORS(app)
+    logging.basicConfig(
+        level=logging.DEBUG,
+        format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+    log = logging.getLogger('fiend_sucker')
     app.run(host='0.0.0.0')

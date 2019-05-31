@@ -24,6 +24,12 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 # SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
+"""
+.. module:: models
+   :synopsis: Contains database actions primitives.
+.. moduleauthor:: AB <github.com/house-of-vanity>
+
+"""
 
 import sqlite3
 import json
@@ -34,8 +40,21 @@ logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 log = logging.getLogger(__name__)
 
+
+# class DataBase create or use existent SQLite database file. It provides 
+# high-level methods for database.
 class DataBase:
+    """This class create or use existent SQLite database file. It provides 
+    high-level methods for database."""
     def __init__(self, scheme, basefile='data.sqlite'):
+        """
+          Constructor creates new SQLite database if 
+          it doesn't exist. Uses SQL code from file for DB init.
+
+          :param scheme: sql filename
+          :type scheme: string
+          :return: None
+        """
         self.scheme = ''
         self.basefile = basefile
         try:
@@ -58,10 +77,25 @@ class DataBase:
         self.close(conn)
 
     def connect(self, basefile):
+        """
+          Create connect object for basefile
+
+          :param basefile: SQLite database filename
+          :type basefile: string
+          :return: sqlite3 connect object
+        """
         log.debug("Open connection to %s" % basefile)
         return sqlite3.connect(basefile, check_same_thread=False)
 
     def execute(self, sql):
+        """
+          Execute SQL code. First of all connect to self.basefile. Close 
+          connection after execution.
+
+          :param sql: SQL code
+          :type sql: string
+          :return: list of response. Empty list when no rows are available.
+        """
         conn = self.connect(basefile=self.basefile)
         log.debug("Executing: %s" % sql)
         cursor = conn.cursor()
@@ -72,11 +106,26 @@ class DataBase:
         return result
 
     def user(self, action, name, pass_hash):
+        """
+          **Perform action with users table**
+
+          :param action: Requested action
+          :type action: string
+          :returns: None
+
+        """
         if action == 'create':
             sql = '''INSERT INTO users('name', 'pass')
             VALUES ('%s', '%s')''' % (name, pass_hash)
             self.execute(sql)
 
     def close(self, conn):
+        """
+          Close connection object instance.
+
+          :param conn: sqlite3 connection object
+          :type conn: object
+          :return: None
+        """
         log.debug("Close connection to %s" % self.basefile)
         conn.close()
